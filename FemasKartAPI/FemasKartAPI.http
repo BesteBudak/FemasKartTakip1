@@ -1,0 +1,6 @@
+@FemasKartAPI_HostAddress = http://localhost:5276
+
+GET {{FemasKartAPI_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
