@@ -3,6 +3,7 @@ using DataAccess;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DataAccess.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250908060335_updateSoftwareTable")]
+    partial class updateSoftwareTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -105,32 +108,6 @@ namespace DataAccess.Migrations
                     b.ToTable("Cards");
                 });
 
-            modelBuilder.Entity("Entities.Models.CardField", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("CardId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PhotoUrls")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CardId");
-
-                    b.ToTable("CardFields");
-                });
-
             modelBuilder.Entity("Entities.Models.Department", b =>
                 {
                     b.Property<int>("Id")
@@ -146,6 +123,28 @@ namespace DataAccess.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Departments");
+                });
+
+            modelBuilder.Entity("Entities.Models.Photo", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("CardId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("FilePath")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CardId");
+
+                    b.ToTable("Photo");
                 });
 
             modelBuilder.Entity("Entities.Models.Software", b =>
@@ -286,10 +285,10 @@ namespace DataAccess.Migrations
                     b.Navigation("Software");
                 });
 
-            modelBuilder.Entity("Entities.Models.CardField", b =>
+            modelBuilder.Entity("Entities.Models.Photo", b =>
                 {
                     b.HasOne("Entities.Models.Card", "Card")
-                        .WithMany("Fields")
+                        .WithMany("Photos")
                         .HasForeignKey("CardId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -321,7 +320,7 @@ namespace DataAccess.Migrations
 
             modelBuilder.Entity("Entities.Models.Card", b =>
                 {
-                    b.Navigation("Fields");
+                    b.Navigation("Photos");
                 });
 
             modelBuilder.Entity("Entities.Models.Department", b =>

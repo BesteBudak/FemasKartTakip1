@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Entities
+namespace Entities.Models
 {
     public class Card
     {
@@ -14,13 +14,14 @@ namespace Entities
         public string Name { get; set; }
         public string Brand { get; set; }
         public string StockCode { get; set; }
-        public Stock Stock { get; set; }
+        public string SupplierCode { get; set; } //tedarikçi kodu
+       
 
         public ICollection<Software> Softwares { get; set; }
         public int SoftwareId { get; set; }
-        public string ApprovalCode { get; set; }
-        public ICollection<Photo> Photos { get; set; }
-        
+        public string ApprovalCode { get; set; } //revizyon no
+        public ICollection<CardField> Fields { get; set; } = new List<CardField>();
+
         public string Type { get; set; }
         public bool Status { get; set; }
     }
