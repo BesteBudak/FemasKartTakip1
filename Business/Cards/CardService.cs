@@ -7,10 +7,10 @@ namespace Business.Cards
 {
     public class CardService : ICardService
     {
-        private readonly CardRepository _cardRepository;
+        private readonly IGenericRepository<Card> _cardRepository;
         private readonly IPhotoService _photoService;
 
-        public CardService(CardRepository cardRepository, IPhotoService photoService)
+        public CardService(IGenericRepository<Card> cardRepository, IPhotoService photoService)
         {
             _cardRepository = cardRepository;
             _photoService = photoService;

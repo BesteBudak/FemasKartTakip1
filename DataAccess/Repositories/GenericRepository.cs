@@ -41,5 +41,10 @@ namespace DataAccess.Repositories
         {
              _dbSet.Update(entity);
         }
+
+        public async Task SaveChangesAsync()
+        {
+            await context.SaveChangesAsync();
+        }
     }
 }

@@ -2,19 +2,22 @@
 using Business.Responses;
 using Microsoft.AspNetCore.Hosting;
 
+
 public class PhotoService : IPhotoService
 {
     
     private readonly string _uploadFolder;
 
-    public PhotoService(string webRootPath)
-    {
-        _uploadFolder = Path.Combine(webRootPath, "uploads");
-        if (!Directory.Exists(_uploadFolder))
-        {
-            Directory.CreateDirectory(_uploadFolder);
-        }
-    }
+    //public PhotoService(IWebHostEnvironment env) // ✅ DI çözebilir
+    //{
+    //    _uploadFolder = Path.Combine(env.WebRootPath, "uploads");
+
+    //    if (!Directory.Exists(_uploadFolder))
+    //    {
+    //        Directory.CreateDirectory(_uploadFolder);
+    //    }
+    //}
+
 
     public async Task<PhotoUploadResponse> UploadBase64Async(string base64)
     {

@@ -28,6 +28,7 @@ builder.Services.AddScoped<ICardService, CardService>();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IDepartmentService, DepartmentService>();
 
+
 builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
 builder.Services.AddScoped<IGenericRepository<ApprovalProcess>, ApprovalProcessRepository>();
 builder.Services.AddScoped<IGenericRepository<Card>, CardRepository>();
@@ -36,11 +37,11 @@ builder.Services.AddScoped<IGenericRepository<Photo>, PhotoRepository>();
 builder.Services.AddScoped<IGenericRepository<Software>, SoftwareRepository>();
 builder.Services.AddScoped<IGenericRepository<User>, UserRepository>();
 
-builder.Services.AddScoped<IPhotoService>(provider =>
-{
-    var env = provider.GetRequiredService<IWebHostEnvironment>();
-    return new PhotoService(env.WebRootPath);
-});
+//builder.Services.AddScoped<IPhotoService>(provider =>
+//{
+//    var env = provider.GetRequiredService<IWebHostEnvironment>();
+//    return new PhotoService(env.WebRootPath);
+//});
 
 var app = builder.Build();
 

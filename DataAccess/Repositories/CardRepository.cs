@@ -10,9 +10,6 @@ namespace DataAccess.Repositories
 {
     public class CardRepository(AppDbContext context) : GenericRepository<Card>(context)
     {
-        public async Task SaveChangesAsync()
-        {
-            await context.SaveChangesAsync();
-        }
+       
     }
 }
