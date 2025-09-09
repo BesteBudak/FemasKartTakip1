@@ -1,12 +1,10 @@
-﻿using Business.Requests;
-using Business.Responses;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Business.Services
+namespace Business.ApprovalProcesses
 {
     public interface IApprovalService
     {

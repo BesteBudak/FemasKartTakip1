@@ -1,5 +1,5 @@
-﻿using Business.Responses;
-using Business.Services;
+﻿using Business.Photoes;
+using Business.Responses;
 using Microsoft.AspNetCore.Hosting;
 
 public class PhotoService : IPhotoService

@@ -1,6 +1,4 @@
-﻿using Business.Requests;
-using Business.Responses;
-using DataAccess;
+﻿using DataAccess;
 using Entities.Models;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -9,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Business.Services
+namespace Business.ApprovalProcesses
 {
     public class ApprovalService : IApprovalService
     {

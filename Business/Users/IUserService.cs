@@ -2,7 +2,7 @@
 using Entities.Dtos;
 using Entities.Models;
 
-namespace Business.Services
+namespace Business.Users
 {
     public interface IUserService
     {

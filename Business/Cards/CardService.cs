@@ -1,9 +1,9 @@
-﻿using Business.Requests;
+﻿using Business.Photoes;
 using Business.Responses;
 using DataAccess.Repositories;
 using Entities.Models;
 
-namespace Business.Services
+namespace Business.Cards
 {
     public class CardService : ICardService
     {
