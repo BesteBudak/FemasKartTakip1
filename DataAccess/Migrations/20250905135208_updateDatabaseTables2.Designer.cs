@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DataAccess.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20250903060502_mig1")]
-    partial class mig1
+    [Migration("20250905135208_updateDatabaseTables2")]
+    partial class updateDatabaseTables2
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -39,7 +39,7 @@ namespace DataAccess.Migrations
                     b.ToTable("CardSoftware");
                 });
 
-            modelBuilder.Entity("Entities.ApprovalProcess", b =>
+            modelBuilder.Entity("Entities.Models.ApprovalProcess", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -53,6 +53,10 @@ namespace DataAccess.Migrations
                     b.Property<int>("SoftwareId")
                         .HasColumnType("int");
 
+                    b.Property<string>("Uploader")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("Id");
 
                     b.HasIndex("SoftwareId")
@@ -61,7 +65,7 @@ namespace DataAccess.Migrations
                     b.ToTable("ApprovalProcesses");
                 });
 
-            modelBuilder.Entity("Entities.Card", b =>
+            modelBuilder.Entity("Entities.Models.Card", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -91,6 +95,10 @@ namespace DataAccess.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("SupplierCode")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Type")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -100,7 +108,7 @@ namespace DataAccess.Migrations
                     b.ToTable("Cards");
                 });
 
-            modelBuilder.Entity("Entities.Department", b =>
+            modelBuilder.Entity("Entities.Models.Department", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -117,7 +125,7 @@ namespace DataAccess.Migrations
                     b.ToTable("Departments");
                 });
 
-            modelBuilder.Entity("Entities.Photo", b =>
+            modelBuilder.Entity("Entities.Models.Photo", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -139,7 +147,7 @@ namespace DataAccess.Migrations
                     b.ToTable("Photo");
                 });
 
-            modelBuilder.Entity("Entities.Software", b =>
+            modelBuilder.Entity("Entities.Models.Software", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -153,6 +161,14 @@ namespace DataAccess.Migrations
 
                     b.Property<int>("CardId")
                         .HasColumnType("int");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FarmwareCode")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("FileType")
                         .IsRequired()
@@ -170,7 +186,7 @@ namespace DataAccess.Migrations
                     b.ToTable("Softwares");
                 });
 
-            modelBuilder.Entity("Entities.Stock", b =>
+            modelBuilder.Entity("Entities.Models.SoftwareRevision", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -178,24 +194,37 @@ namespace DataAccess.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("CardId")
+                    b.Property<string>("ApprovalCode")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FilePath")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FileType")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Notes")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("SoftwareId")
                         .HasColumnType("int");
 
-                    b.Property<bool>("Status")
-                        .HasColumnType("bit");
-
-                    b.Property<int>("Total")
-                        .HasColumnType("int");
+                    b.Property<string>("Uploader")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CardId")
-                        .IsUnique();
+                    b.HasIndex("SoftwareId");
 
-                    b.ToTable("Stocks");
+                    b.ToTable("SoftwareRevisions");
                 });
 
-            modelBuilder.Entity("Entities.User", b =>
+            modelBuilder.Entity("Entities.Models.User", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -235,33 +264,33 @@ namespace DataAccess.Migrations
 
             modelBuilder.Entity("CardSoftware", b =>
                 {
-                    b.HasOne("Entities.Card", null)
+                    b.HasOne("Entities.Models.Card", null)
                         .WithMany()
                         .HasForeignKey("CardsId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Entities.Software", null)
+                    b.HasOne("Entities.Models.Software", null)
                         .WithMany()
                         .HasForeignKey("SoftwaresId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Entities.ApprovalProcess", b =>
+            modelBuilder.Entity("Entities.Models.ApprovalProcess", b =>
                 {
-                    b.HasOne("Entities.Software", "Software")
+                    b.HasOne("Entities.Models.Software", "Software")
                         .WithOne("ApprovalProcess")
-                        .HasForeignKey("Entities.ApprovalProcess", "SoftwareId")
+                        .HasForeignKey("Entities.Models.ApprovalProcess", "SoftwareId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Software");
                 });
 
-            modelBuilder.Entity("Entities.Photo", b =>
+            modelBuilder.Entity("Entities.Models.Photo", b =>
                 {
-                    b.HasOne("Entities.Card", "Card")
+                    b.HasOne("Entities.Models.Card", "Card")
                         .WithMany("Photos")
                         .HasForeignKey("CardId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -270,20 +299,16 @@ namespace DataAccess.Migrations
                     b.Navigation("Card");
                 });
 
-            modelBuilder.Entity("Entities.Stock", b =>
+            modelBuilder.Entity("Entities.Models.SoftwareRevision", b =>
                 {
-                    b.HasOne("Entities.Card", "Card")
-                        .WithOne("Stock")
-                        .HasForeignKey("Entities.Stock", "CardId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Card");
+                    b.HasOne("Entities.Models.Software", null)
+                        .WithMany("SoftwareRevisions")
+                        .HasForeignKey("SoftwareId");
                 });
 
-            modelBuilder.Entity("Entities.User", b =>
+            modelBuilder.Entity("Entities.Models.User", b =>
                 {
-                    b.HasOne("Entities.Department", "Department")
+                    b.HasOne("Entities.Models.Department", "Department")
                         .WithMany("Users")
                         .HasForeignKey("DepartmentId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -292,23 +317,22 @@ namespace DataAccess.Migrations
                     b.Navigation("Department");
                 });
 
-            modelBuilder.Entity("Entities.Card", b =>
+            modelBuilder.Entity("Entities.Models.Card", b =>
                 {
                     b.Navigation("Photos");
-
-                    b.Navigation("Stock")
-                        .IsRequired();
                 });
 
-            modelBuilder.Entity("Entities.Department", b =>
+            modelBuilder.Entity("Entities.Models.Department", b =>
                 {
                     b.Navigation("Users");
                 });
 
-            modelBuilder.Entity("Entities.Software", b =>
+            modelBuilder.Entity("Entities.Models.Software", b =>
                 {
                     b.Navigation("ApprovalProcess")
                         .IsRequired();
+
+                    b.Navigation("SoftwareRevisions");
                 });
 #pragma warning restore 612, 618
         }
