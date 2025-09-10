@@ -1,3 +1,18 @@
 ﻿@{
     Layout = "_Layout";
 }
+
+
+@* @{
+    var path = Context.Request.Path.Value?.ToLower();
+
+    // Eğer login veya register sayfasındaysak layout kullanma
+    if (path.Contains("/Account/Login") || path.Contains("/Account/Register"))
+    {
+        Layout = null;
+    }
+    else
+    {
+        Layout = "_Layout";
+    }
+} *@

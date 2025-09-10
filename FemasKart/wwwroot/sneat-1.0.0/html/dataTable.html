@@ -445,12 +445,6 @@
                             </div>
                         </div>
                     </div>
-
-
-
-
-
-
                 </div>
                 <!-- / DataTable_Bitiş -->
                 <!-- / Content -->
@@ -528,65 +522,41 @@
     <script src="https://cdn.datatables.net/buttons/2.4.2/js/buttons.print.min.js"></script>
 
     <script async defer src="https://buttons.github.io/buttons.js"></script>
-
+    
+    <table id="kartTable" class="display">
+        <thead>
+            <tr>
+                <th> ID</th>
+                <th>Kart Adı</th>
+                <th>Marka</th>
+                <th>Yazılım Kodu</th>
+                <th>Stok Kodu</th>
+                <th>Yazılım Türü</th>
+                <th>İşlemler</th>
+            </tr>
+        </thead>
+    </table>
 
     <script>
-        $(document).ready(function () {
-            let table = $("#example").DataTable({
-                dom: "Bfrtip",
-                buttons: [
-                    { extend: "copy", className: "dropdown-item" },
-                    { extend: "csv", className: "dropdown-item" },
-                    { extend: "excel", className: "dropdown-item" },
-                    { extend: "pdf", className: "dropdown-item" },
-                    { extend: "print", className: "dropdown-item" },
-                ],
-            });
 
-            // Export dropdown’u DataTables butonlarıyla doldur
-            table.buttons().container().appendTo(".dt-buttons .dropdown-menu");
-
-            // Length dropdown senkronize et
-            $("#dt-length").on("change", function () {
-                table.page.len($(this).val()).draw();
-            });
-
-            // Search input senkronize et
-            $("#dt-search").on("keyup", function () {
-                table.search(this.value).draw();
-            });
-
-            // Popup fonksiyonu
-            function showPopup(message) {
-                $("#actionMessage").text(message);
-                let modal = new bootstrap.Modal(document.getElementById("actionModal"));
-                modal.show();
-            }
-
-            // Düzenle butonu
-            $("#example").on("click", ".btn-edit", function () {
-                let row = $(this).closest("tr");
-                let btn = $(this);
-
-                if (btn.text() === "Düzenle") {
-                    row.find("td").not(":last").attr("contenteditable", "true").addClass("table-warning");
-                    btn.text("Kaydet");
-                } else {
-                    row.find("td").not(":last").removeAttr("contenteditable").removeClass("table-warning");
-                    btn.text("Düzenle");
-                    showPopup("Satır başarıyla güncellendi ✅");
-                }
-            });
-
-            // Sil butonu
-            $("#example").on("click", ".btn-delete", function () {
-                let row = $(this).closest("tr");
-                if (confirm("Bu satırı silmek istediğine emin misin?")) {
-                    table.row(row).remove().draw();
-                    showPopup("Satır başarıyla silindi 🗑️");
-                }
-            });
+        $('#kartTable').DataTable({
+            ajax: {
+                url: "api/Kartlar",
+                dataSrc: ""
+            },
+            columns: [
+                { data: "id" },
+                { data: "name" },
+                { data: "brand" },
+                { data: "stockCode" },
+                { data: "type" },
+                { data: "status"/*, render: d => d ? "Aktif" : "Pasif"*/ }
+            ]
         });
+
+
+
+
     </script>
 </body>
 </html>

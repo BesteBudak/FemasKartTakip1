@@ -12,4 +12,8 @@
     <None Include="wwwroot\sneat-1.0.0\.github\workflows\issue-staler.yml" />
   </ItemGroup>
 
+  <ItemGroup>
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="9.0.0" />
+  </ItemGroup>
+
 </Project>
