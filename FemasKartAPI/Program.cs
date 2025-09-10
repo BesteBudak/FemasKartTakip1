@@ -23,24 +23,27 @@ builder.Services.AddOpenApi();
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
+builder.Services.Configure<PhotoSettings>(builder.Configuration.GetSection("PhotoSettings"));
+
 builder.Services.AddScoped<IPhotoService, PhotoService>();
 builder.Services.AddScoped<ICardService, CardService>();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IDepartmentService, DepartmentService>();
 
+
 builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
 builder.Services.AddScoped<IGenericRepository<ApprovalProcess>, ApprovalProcessRepository>();
-builder.Services.AddScoped<IGenericRepository<Card>, CardRepository>();
+builder.Services.AddScoped<ICardRepository, CardRepository>();
 builder.Services.AddScoped<IGenericRepository<Department>, DepartmentRepository>();
 builder.Services.AddScoped<IGenericRepository<Photo>, PhotoRepository>();
 builder.Services.AddScoped<IGenericRepository<Software>, SoftwareRepository>();
 builder.Services.AddScoped<IGenericRepository<User>, UserRepository>();
 
-builder.Services.AddScoped<IPhotoService>(provider =>
-{
-    var env = provider.GetRequiredService<IWebHostEnvironment>();
-    return new PhotoService(env.WebRootPath);
-});
+//builder.Services.AddScoped<IPhotoService>(provider =>
+//{
+//    var env = provider.GetRequiredService<IWebHostEnvironment>();
+//    return new PhotoService(env.WebRootPath);
+//});
 
 var app = builder.Build();
 
@@ -53,7 +56,10 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
+app.MapGet("/", () => "API Çalýþýyor ");
 
 app.MapControllers();
+
+
 
 app.Run();

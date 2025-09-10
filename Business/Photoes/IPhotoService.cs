@@ -9,8 +9,9 @@ namespace Business.Photoes
 {
     public interface IPhotoService
     {
-        Task<PhotoUploadResponse> UploadBase64Async(string base64);
-        Task<bool> DeleteAsync(string imageUrl);
+        //Task<PhotoUploadResponse> UploadBase64Async(string base64);
+        //Task<bool> DeleteAsync(string imageUrl);
+        Task<(bool Success, string Url)> UploadBase64Async(string base64);
     }
 
   

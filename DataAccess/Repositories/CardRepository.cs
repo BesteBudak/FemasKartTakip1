@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace DataAccess.Repositories
 {
-    public class CardRepository(AppDbContext context) : GenericRepository<Card>(context)
+    public class CardRepository(AppDbContext context) : GenericRepository<Card>(context),ICardRepository
     {
         public async Task SaveChangesAsync()
         {
