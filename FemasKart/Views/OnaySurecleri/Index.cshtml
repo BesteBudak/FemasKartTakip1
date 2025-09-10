@@ -1,0 +1,502 @@
+﻿@* @{
+    ViewData["Title"] = "Onay Süreçleri";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="card">
+    <div class="card-body">
+        <h4 class="card-title mb-4">Onay Süreçleri</h4>
+
+        <!-- Onay Bekleyen -->
+        <div id="pendingTable" class="datatable-container">
+            <h5>Onay Bekleyen Ürünler</h5>
+            <table id="dtPending" class="table table-striped table-bordered nowrap" style="width:100%">
+                <thead>
+                    <tr>
+                        <th>Ürün Adı</th>
+                        <th>Kategori</th>
+                        <th>Fiyat</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td>Ürün 1</td><td>Kategori A</td><td>100 ₺</td></tr>
+                    <tr><td>Ürün 2</td><td>Kategori B</td><td>250 ₺</td></tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Onaylanan -->
+        <div id="approvedTable" class="datatable-container d-none">
+            <h5>Onaylanan Ürünler</h5>
+            <table id="dtApproved" class="table table-striped table-bordered nowrap" style="width:100%">
+                <thead>
+                    <tr>
+                        <th>Ürün Adı</th>
+                        <th>Kategori</th>
+                        <th>Fiyat</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td>Ürün 3</td><td>Kategori C</td><td>300 ₺</td></tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Reddedilen -->
+        <div id="rejectedTable" class="datatable-container d-none">
+            <h5>Reddedilen Ürünler</h5>
+            <table id="dtRejected" class="table table-striped table-bordered nowrap" style="width:100%">
+                <thead>
+                    <tr>
+                        <th>Ürün Adı</th>
+                        <th>Kategori</th>
+                        <th>Fiyat</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td>Ürün 4</td><td>Kategori D</td><td>150 ₺</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            // DataTables init
+            $('#dtPending').DataTable({
+                responsive: true,
+                dom: 'Bfrtip',
+                buttons: ['excel', 'pdf', 'print']
+            });
+            $('#dtApproved').DataTable({
+                responsive: true,
+                dom: 'Bfrtip',
+                buttons: ['excel', 'pdf', 'print']
+            });
+            $('#dtRejected').DataTable({
+                responsive: true,
+                dom: 'Bfrtip',
+                buttons: ['excel', 'pdf', 'print']
+            });
+
+            // Sidebar linklerinden hangi tablo açılacaksa URL parametresinden kontrol
+            const urlParams = new URLSearchParams(window.location.search);
+            const tab = urlParams.get("tab"); // ?tab=approved gibi
+
+            if (tab === "approved") {
+                showTable("approvedTable");
+            } else if (tab === "rejected") {
+                showTable("rejectedTable");
+            } else {
+                showTable("pendingTable"); // default
+            }
+
+            function showTable(target) {
+                $(".datatable-container").addClass("d-none");
+                $("#" + target).removeClass("d-none");
+            }
+        });
+    </script>
+}
+  sekmeler ayrı ayrı geliyor çalışıyor *@
+
+@* 
+@{
+    ViewData["Title"] = "Onay Süreçleri";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="card mb-4">
+    <div class="card-body">
+        <h4 class="card-title">Onay Bekleyen Ürünler</h4>
+        <div id="pendingTable">
+            <table id="dtPending" class="table table-striped table-bordered nowrap" style="width:100%">
+                <thead>
+                    <tr>
+                        <th>Ürün Adı</th>
+                        <th>Kategori</th>
+                        <th>Fiyat</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td>Ürün 1</td><td>Kategori A</td><td>100 ₺</td></tr>
+                    <tr><td>Ürün 2</td><td>Kategori B</td><td>250 ₺</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<div class="card mb-4">
+    <div class="card-body">
+        <h4 class="card-title">Onaylanan Ürünler</h4>
+        <div id="approvedTable">
+            <table id="dtApproved" class="table table-striped table-bordered nowrap" style="width:100%">
+                <thead>
+                    <tr>
+                        <th>Ürün Adı</th>
+                        <th>Kategori</th>
+                        <th>Fiyat</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td>Ürün 3</td><td>Kategori C</td><td>300 ₺</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<div class="card mb-4">
+    <div class="card-body">
+        <h4 class="card-title">Reddedilen Ürünler</h4>
+        <div id="rejectedTable">
+            <table id="dtRejected" class="table table-striped table-bordered nowrap" style="width:100%">
+                <thead>
+                    <tr>
+                        <th>Ürün Adı</th>
+                        <th>Kategori</th>
+                        <th>Fiyat</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td>Ürün 4</td><td>Kategori D</td><td>150 ₺</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            // DataTables init
+            $('#dtPending').DataTable({ responsive: true });
+            $('#dtApproved').DataTable({ responsive: true });
+            $('#dtRejected').DataTable({ responsive: true });
+
+            // Sayfayı tabloya scroll et
+            function scrollToTable(tableId) {
+                $('html, body').animate({
+                    scrollTop: $("#" + tableId).offset().top - 80 // navbar yüksekliği kadar offset
+                }, 600);
+            }
+
+            // URL parametresine göre scroll
+            const urlParams = new URLSearchParams(window.location.search);
+            const tab = urlParams.get("tab");
+            if (tab === "approved") {
+                scrollToTable("approvedTable");
+            } else if (tab === "rejected") {
+                scrollToTable("rejectedTable");
+            } else if (tab === "pending") {
+                scrollToTable("pendingTable");
+            }
+
+            // Sidebar linklerini override et → scroll çalışsın
+            $(".menu-link").click(function (e) {
+                const href = $(this).attr("href");
+                if (href.includes("tab=")) {
+                    e.preventDefault();
+                    const param = href.split("tab=")[1];
+                    if (param === "approved") scrollToTable("approvedTable");
+                    if (param === "rejected") scrollToTable("rejectedTable");
+                    if (param === "pending") scrollToTable("pendingTable");
+                }
+            });
+        });
+    </script>
+}
+  istediğim gibi çalışıyor skroll ile geçiliyor ama diğer tablolar da gözüküyor *@
+
+@* 
+@{
+    ViewData["Title"] = "Onay Süreçleri";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="accordion" id="accordionTables">
+    <!-- Onay Bekleyen -->
+    <div class="accordion-item">
+        <h2 class="accordion-header" id="headingPending">
+            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapsePending">
+                Onay Bekleyen Ürünler
+            </button>
+        </h2>
+        <div id="collapsePending" class="accordion-collapse collapse show" data-bs-parent="#accordionTables">
+            <div class="accordion-body">
+                <table id="dtPending" class="table table-striped table-bordered nowrap" style="width:100%">
+                    <thead>
+                        <tr><th>Ürün Adı</th><th>Kategori</th><th>Fiyat</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>Ürün 1</td><td>Kategori A</td><td>100 ₺</td></tr>
+                        <tr><td>Ürün 2</td><td>Kategori B</td><td>250 ₺</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Onaylanan -->
+    <div class="accordion-item">
+        <h2 class="accordion-header" id="headingApproved">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseApproved">
+                Onaylanan Ürünler
+            </button>
+        </h2>
+        <div id="collapseApproved" class="accordion-collapse collapse" data-bs-parent="#accordionTables">
+            <div class="accordion-body">
+                <table id="dtApproved" class="table table-striped table-bordered nowrap" style="width:100%">
+                    <thead>
+                        <tr><th>Ürün Adı</th><th>Kategori</th><th>Fiyat</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>Ürün 3</td><td>Kategori C</td><td>300 ₺</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Reddedilen -->
+    <div class="accordion-item">
+        <h2 class="accordion-header" id="headingRejected">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseRejected">
+                Reddedilen Ürünler
+            </button>
+        </h2>
+        <div id="collapseRejected" class="accordion-collapse collapse" data-bs-parent="#accordionTables">
+            <div class="accordion-body">
+                <table id="dtRejected" class="table table-striped table-bordered nowrap" style="width:100%">
+                    <thead>
+                        <tr><th>Ürün Adı</th><th>Kategori</th><th>Fiyat</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>Ürün 4</td><td>Kategori D</td><td>150 ₺</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            // DataTables init
+            $('#dtPending').DataTable({ responsive: true });
+            $('#dtApproved').DataTable({ responsive: true });
+            $('#dtRejected').DataTable({ responsive: true });
+
+            // URL parametresine göre hangi panel açılacak
+            const tab = new URLSearchParams(window.location.search).get("tab");
+
+            if (tab === "approved") {
+                new bootstrap.Collapse(document.getElementById('collapseApproved'), { toggle: true });
+            } else if (tab === "rejected") {
+                new bootstrap.Collapse(document.getElementById('collapseRejected'), { toggle: true });
+            } else {
+                new bootstrap.Collapse(document.getElementById('collapsePending'), { toggle: true });
+            }
+
+            // Sidebar linklerine tıklandığında accordion aç
+            $(".menu-link").click(function (e) {
+                const href = $(this).attr("href");
+                if (href.includes("tab=")) {
+                    e.preventDefault();
+                    const param = href.split("tab=")[1];
+                    if (param === "approved") {
+                        new bootstrap.Collapse(document.getElementById('collapseApproved'), { toggle: true });
+                    }
+                    if (param === "rejected") {
+                        new bootstrap.Collapse(document.getElementById('collapseRejected'), { toggle: true });
+                    }
+                    if (param === "pending") {
+                        new bootstrap.Collapse(document.getElementById('collapsePending'), { toggle: true });
+                    }
+                }
+            });
+        });
+    </script>
+}sakın silme 
+ *@
+
+@{
+    ViewData["Title"] = "Onay Süreçleri";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+
+
+</style>
+
+<div class="accordion" id="accordionTables">
+    <!-- Onay Bekleyen -->
+    <div class="accordion-item">
+        <h2 class="accordion-header">
+            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapsePending">
+                Onay Bekleyen Ürünler
+            </button>
+        </h2>
+        <div id="collapsePending" class="accordion-collapse collapse show" data-bs-parent="#accordionTables">
+            <div class="accordion-body">
+                <table id="dtPending" class="table table-striped table-bordered nowrap" style="width:100%">
+                    <thead>
+                        <tr>
+                            <th>Kart Stok K.</th>
+                            <th>Kart Tanım</th>
+                            <th>Yazılım Kodu</th>
+                            <th>Yazılım Tanım</th>
+                            <th>Prog. Tipi</th>
+                            <th>Durum</th>
+                            <th>Yükleyen K.</th>
+                            <th>İşlemler</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>1001</td>
+                            <td>Kart A</td>
+                            <td>SW-01</td>
+                            <td>Yazılım A</td>
+                            <td>Tip-1</td>
+                            <td>Bekliyor</td>
+                            <td>User1</td>
+                            <td>
+                                <button class="btn btn-success btn-sm">Onayla</button>
+                                <button class="btn btn-danger btn-sm">Reddet</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>1002</td>
+                            <td>Kart B</td>
+                            <td>SW-02</td>
+                            <td>Yazılım B</td>
+                            <td>Tip-2</td>
+                            <td>Bekliyor</td>
+                            <td>User2</td>
+                            <td>
+                                <button class="btn btn-success btn-sm">Onayla</button>
+                                <button class="btn btn-danger btn-sm">Reddet</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Onaylanan -->
+    <div class="accordion-item">
+        <h2 class="accordion-header">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseApproved">
+                Onaylanan Ürünler
+            </button>
+        </h2>
+        <div id="collapseApproved" class="accordion-collapse collapse" data-bs-parent="#accordionTables">
+            <div class="accordion-body">
+                <table id="dtApproved" class="table table-striped table-bordered nowrap" style="width:100%">
+                    <thead>
+                        <tr>
+                            <th>Kart Stok K.</th>
+                            <th>Kart Tanım</th>
+                            <th>Yazılım Kodu</th>
+                            <th>Yazılım Tanım</th>
+                            <th>Prog. Tipi</th>
+                            <th>Durum</th>
+                            <th>Yükleyen K.</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>2001</td>
+                            <td>Kart C</td>
+                            <td>SW-03</td>
+                            <td>Yazılım C</td>
+                            <td>Tip-1</td>
+                            <td>Onaylandı</td>
+                            <td>Admin</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Reddedilen -->
+    <div class="accordion-item">
+        <h2 class="accordion-header">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseRejected">
+                Reddedilen Ürünler
+            </button>
+        </h2>
+        <div id="collapseRejected" class="accordion-collapse collapse" data-bs-parent="#accordionTables">
+            <div class="accordion-body">
+                <table id="dtRejected" class="table table-striped table-bordered nowrap" style="width:100%">
+                    <thead>
+                        <tr>
+                            <th>Kart Stok K.</th>
+                            <th>Kart Tanım</th>
+                            <th>Yazılım Kodu</th>
+                            <th>Yazılım Tanım</th>
+                            <th>Prog. Tipi</th>
+                            <th>Durum</th>
+                            <th>Yükleyen K.</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>3001</td>
+                            <td>Kart D</td>
+                            <td>SW-04</td>
+                            <td>Yazılım D</td>
+                            <td>Tip-3</td>
+                            <td>Reddedildi</td>
+                            <td>UserX</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            // DataTables init
+            $('#dtPending').DataTable({
+                responsive: true,
+                dom: 'Bfrtip',
+                buttons: ['excel', 'pdf', 'print']
+            });
+
+            $('#dtApproved').DataTable({
+                responsive: true,
+                dom: 'Bfrtip',
+                buttons: ['excel', 'pdf', 'print']
+            });
+
+            $('#dtRejected').DataTable({
+                responsive: true,
+                dom: 'Bfrtip',
+                buttons: ['excel', 'pdf', 'print']
+            });
+
+            // URL parametresine göre hangi panel açılacak
+            const tab = new URLSearchParams(window.location.search).get("tab");
+
+            if (tab === "approved") {
+                new bootstrap.Collapse(document.getElementById('collapseApproved'), { toggle: true });
+            } else if (tab === "rejected") {
+                new bootstrap.Collapse(document.getElementById('collapseRejected'), { toggle: true });
+            } else {
+                new bootstrap.Collapse(document.getElementById('collapsePending'), { toggle: true });
+            }
+        });
+    </script>
+}
