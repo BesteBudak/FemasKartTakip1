@@ -1,5 +1,6 @@
 ﻿using Business.Photoes;
 using Business.Responses;
+using DataAccess;
 using DataAccess.Repositories;
 using Entities.Models;
 
@@ -7,10 +8,10 @@ namespace Business.Cards
 {
     public class CardService : ICardService
     {
-        private readonly IGenericRepository<Card> _cardRepository;
+        private readonly ICardRepository _cardRepository;
         private readonly IPhotoService _photoService;
 
-        public CardService(IGenericRepository<Card> cardRepository, IPhotoService photoService)
+        public CardService(ICardRepository cardRepository, IPhotoService photoService)
         {
             _cardRepository = cardRepository;
             _photoService = photoService;
