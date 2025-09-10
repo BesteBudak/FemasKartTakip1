@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Entities
+namespace Entities.Models
 {
     public class ApprovalProcess
     {
@@ -15,6 +15,14 @@ namespace Entities
         [ForeignKey("SoftwareId")]
         public int SoftwareId { get; set; }
         public Software Software { get; set; }
-        public bool ApprovalStatus { get; set; }
+        public string Uploader {  get; set; }
+        public ApprovalStatus Status { get; set; }
     }
+    public enum ApprovalStatus
+    {
+        Pending = 0,    // Bekliyor
+        Approved = 1,   // Onaylandı
+        Rejected = 2    // Reddedildi
+    }
+
 }
