@@ -472,19 +472,28 @@
             $('#dtPending').DataTable({
                 responsive: true,
                 dom: 'Bfrtip',
-                buttons: ['excel', 'pdf', 'print']
+                buttons: ['excel', 'pdf', 'print'],
+                        language: {
+          url: "//cdn.datatables.net/plug-ins/2.3.3/i18n/tr.json"
+        }
             });
 
             $('#dtApproved').DataTable({
                 responsive: true,
                 dom: 'Bfrtip',
-                buttons: ['excel', 'pdf', 'print']
+                buttons: ['excel', 'pdf', 'print'],
+                        language: {
+          url: "//cdn.datatables.net/plug-ins/2.3.3/i18n/tr.json"
+        }
             });
 
             $('#dtRejected').DataTable({
                 responsive: true,
                 dom: 'Bfrtip',
-                buttons: ['excel', 'pdf', 'print']
+                buttons: ['excel', 'pdf', 'print'],
+                        language: {
+          url: "//cdn.datatables.net/plug-ins/2.3.3/i18n/tr.json"
+        }
             });
 
             // URL parametresine göre hangi panel açılacak
