@@ -7,7 +7,7 @@
         "ASPNETCORE_ENVIRONMENT": "Development"
       },
       "dotnetRunMessages": true,
-      "applicationUrl": "http://localhost:7171",
+      "applicationUrl": "http://localhost:7474",
       "nativeDebugging": false
     },
     "https": {
@@ -17,7 +17,7 @@
         "ASPNETCORE_ENVIRONMENT": "Development"
       },
       "dotnetRunMessages": true,
-      "applicationUrl": "https://localhost:7170;http://localhost:7171"
+      "applicationUrl": "https://localhost:7272;http://localhost:7474"
     }
   },
   "$schema": "https://json.schemastore.org/launchsettings.json"

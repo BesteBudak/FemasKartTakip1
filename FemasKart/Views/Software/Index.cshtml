@@ -1,52 +1,40 @@
-﻿
+﻿ 
+
 @{
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <head>
-    <!-- SweetAlert2 CDN -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
-<style>
-    #example td:last-child .d-flex {
-        flex-wrap: wrap;
-        gap: 0.25rem;
-    }
-
-    @@media (max-width: 768px) {
-        #example {
-            display: block;
-            width: 100%;
-            overflow-x: auto;
-            white-space: nowrap; /* satırların alt satıra kaymasını engeller */
+    <style>
+        #example td:last-child .d-flex {
+            flex-wrap: wrap;
+            gap: 0.25rem;
         }
-    }
-</style>
+
+        @@media (max-width: 768px) {
+            #example {
+                display: block;
+                width: 100%;
+                overflow-x: auto;
+                white-space: nowrap;
+            }
+        }
+    </style>
 </head>
 
 <div class="content-wrapper">
-    <!-- Content -->
-    <!-- DataTable_Başlangıç -->
     <div class="container mt-6">
-        <!-- Bildirim Alanı -->
-        <div id="alert-container"></div>
-
         <div class="card">
             <div class="card-header d-flex flex-column flex-md-row justify-content-between align-items-center">
-
                 <div class="d-flex gap-2">
-                    <div class="dt-buttons btn-group">
-                    @*     <button class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown">Export</button> *@
-                        <ul class="dropdown-menu"></ul>
-                    </div>
+                    <div class="dt-buttons btn-group"><ul class="dropdown-menu"></ul></div>
                     <button class="btn btn-primary create-new">
-                        <i class="bi bi-plus-circle"></i>
-                        <span> Yeni Yazılım Ekle</span>
+                        <i class="bi bi-plus-circle"></i><span> Yeni Yazılım Ekle</span>
                     </button>
                 </div>
             </div>
-
             <div class="card-body">
                 <div class="row mb-3">
                     <div class="col-md-6 d-flex align-items-center">
@@ -64,269 +52,217 @@
                         <input type="search" id="dt-search" class="form-control w-auto">
                     </div>
                 </div>
-                <table id="example" class="table table-striped table-bordered display">
+
+                <table id="example" class="table table-striped table-bordered display" style="width:100%">
                     <thead>
                         <tr>
                             <th>ID</th>
                             <th>Yazılım Kodu</th>
                             <th>Yazılım Adı</th>
                             <th>Revizyon No</th>
-                            <th>Dosya Türü (hex./bat.)</th>
+                            <th>Dosya Türü</th>
                             <th>Açıklama</th>
                             <th>İşlemler</th>
                         </tr>
                     </thead>
-                    <tbody>
-                        <tr>
-                            <td>1</td>
-                            <td>Kart A</td>
-                            <td>Marka X</td>
-                            <td>KOD123</td>
-                            <td>Tür 1</td>
-                            <td>STK-001</td>
-
-                            
-                            <td>
-                                <div class="d-flex flex-wrap gap-2">
-                                    <button class="btn btn-sm btn-secondary btn-edit">Düzenle</button>
-                                    <button class="btn btn-sm btn-secondary btn-delete">Sil</button>
-                                    <button class="btn btn-sm btn-info btn-revizyon">Revizyon Yükle/Görüntüle</button>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>2</td>
-                            <td>Kart B</td>
-                            <td>Marka Y</td>
-                            <td>KOD456</td>
-                            <td>Tür 2</td>
-                            <td>STK-002</td>
-
-
-                            <td>
-                                <div class="d-flex flex-wrap gap-2">
-                                    <button class="btn btn-sm btn-secondary btn-edit">Düzenle</button>
-                                    <button class="btn btn-sm btn-secondary btn-delete">Sil</button>
-                                    <button class="btn btn-sm btn-info btn-revizyon">Revizyon Yükle/Görüntüle</button>
-                                </div>
-                            </td>
-                        </tr>
-                    </tbody>
                 </table>
             </div>
         </div>
     </div>
+</div>
 
-
-    <!-- yazılım ekle başlangıcı -->
-    <div class="modal fade" id="createModal" tabindex="-1">
-        <div class="modal-dialog modal-lg modal-dialog-centered">
-            <div class="modal-content">
-                <form id="createForm">
-                    <div class="modal-header">
-                        <h5 class="modal-title">Yeni Yazlım Ekle</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                    </div>
-                    <div class="modal-body">
-                        <!-- Yazılım Bilgileri -->
-                        <div class="row g-3 mb-3">
-                            <div class="col-md-6">
-                                <label class="form-label">Yazılım Kodu*</label>
-                                <input type="text" class="form-control" name="yazilimKodu" required />
-                            </div>
-                            <div class="col-md-6">
-                                <label class="form-label">Yazılım Tanımlaması*</label>
-                                <input type="text" class="form-control" name="yazilimTanimlamasi" required />
-                            </div>
-                            <div class="col-md-6">
-                                <label class="form-label">Dosya Türü* (hex./bat.)*</label>
-                                <input type="text" class="form-control" name="dosyaTuru" required />
-                            </div>
-                            <div class="col-md-6">
-                                <label class="form-label">Dosya Türü* (hex./bat.)</label>
-                                <input type="file"
-                                       class="form-control"
-                                       name="dosyaTuru"
-                                       required
-                                       data-preview="#previewProg"
-                                       accept=".hex,.bat"
-                                       multiple />
-                                <div id="previewProg" class="d-flex gap-2 mt-2 flex-wrap"></div>
-                            </div>
-                            <div class="col-md-6">
-                                <label class="form-label">Revizyon No*</label>
-                                <input type="text" class="form-control" name="revizyonNo" required />
-                            </div>
-                            <div class="col-md-6">
-                                <label class="form-label">Açıklama*</label>
-                                <input type="text" class="form-control" name="aciklama" required />
-                            </div>
-                        </div>    
-                    </div>
-
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">İptal</button>
-                        <button type="submit" class="btn btn-primary">Kaydet</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-    <!-- yazılım ekle bitişi -->
-    <!-- Yazılım Düzenle Modal -->
-    <div class="modal fade" id="editModal" tabindex="-1">
-        <div class="modal-dialog modal-lg modal-dialog-centered">
-            <div class="modal-content">
-                <form id="editForm">
-                    <div class="modal-header">
-                        <h5 class="modal-title">🛠 Yazılımı Düzenle</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                    </div>
-                    <div class="modal-body">
-                        <div class="row g-3 mb-3">
-                            <div class="col-md-6">
-                                <label class="form-label">Yazılım Kodu</label>
-                                <input type="text" class="form-control" name="yazilimKodu" id="editYazilimKodu" readonly />
-                            </div>
-                            <div class="col-md-6">
-                                <label class="form-label">Yazılım Tanımlaması</label>
-                                <input type="text" class="form-control" name="yazilimTanimlamasi" id="editYazilimTanimlamasi" required />
-                            </div>
-                            <div class="col-md-6">
-                                <label class="form-label">Programlama Tipi</label>
-                                <input type="text" class="form-control" name="programlamaTipi" id="editProgramlamaTipi" required />
-                            </div>
-                            <div class="col-md-6">
-                                <label class="form-label">Revizyon No</label>
-                                <input type="text" class="form-control" name="revizyonNo" id="editRevizyonNo" required />
-                            </div>
-                            <div class="col-md-12">
-                                <label class="form-label">Açıklama</label>
-                                <input type="text" class="form-control" name="aciklama" id="editAciklama" required />
-                            </div>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">İptal</button>
-                        <button type="submit" class="btn btn-primary">Kaydet</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-    <!-- Yazılım Düzenle Modal bitişi -->
-
-    <!-- Revizyonlar Modal -->
-    <div class="modal fade" id="revizyonModal" tabindex="-1">
-        <div class="modal-dialog modal-xl modal-dialog-centered">
-            <div class="modal-content">
+<!-- yazılım ekle başlangıcı -->
+<div class="modal fade" id="createModal" tabindex="-1">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content">
+            <form id="createForm">
                 <div class="modal-header">
-                    <h5 class="modal-title">Yazılım Revizyonları</h5>
+                    <h5 class="modal-title">Yeni Yazlım Ekle</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body">
-
-                    <!-- Seçilen Yazılım Bilgileri -->
-                    <div class="mb-3">
-                        <p><strong>Yazılım ID:</strong> <span id="revizyonYazilimId"></span></p>
-                        <p><strong>Yazılım Adı:</strong> <span id="revizyonYazilimAdi"></span></p>
-                    </div>
-
-                    <!-- Yeni Revizyon Yükleme -->
-                    <div class="card mb-4">
-                        <div class="card-header">Yeni Revizyon Yükle</div>
-                        <div class="card-body">
-                            <form id="revizyonForm">
-                                <div class="row g-3">
-                                    <div class="col-md-4">
-                                        <label class="form-label">Revizyon No*</label>
-                                        <input type="text" class="form-control" name="revizyonNo" required>
-                                    </div>
-                                    <div class="col-md-8">
-                                        <label class="form-label">Revizyon Notları (Opsiyonel)</label>
-                                        <input type="text" class="form-control" name="revizyonNotu" placeholder="Örn: Hata düzeltmeleri, yeni özellikler">
-                                    </div>
-                                    <div class="col-md-12">
-                                        <label class="form-label">Revizyon Dosyası*</label>
-                                        <input type="file"
-                                               class="form-control"
-                                               name="revizyonDosya"
-                                               accept=".hex,.bat"
-                                               required>
-                                    </div>
-                                </div>
-                                <div class="mt-3 text-end">
-                                    <button type="submit" class="btn btn-primary">Yükle</button>
-                                </div>
-                            </form>
+                    <!-- Yazılım Bilgileri -->
+                    <div class="row g-3 mb-3">
+                        <div class="col-md-6">
+                            <label class="form-label">Yazılım Kodu*</label>
+                            <input type="text" class="form-control" name="yazilimKodu" required />
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Yazılım Tanımlaması*</label>
+                            <input type="text" class="form-control" name="yazilimTanimlamasi" required />
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Dosya Türü* (hex./bat.)*</label>
+                            <input type="text" class="form-control" name="dosyaTuru" required />
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Dosya Türü* (hex./bat.)</label>
+                            <input type="file"
+                                   class="form-control"
+                                   name="dosyaTuru"
+                                   required
+                                   data-preview="#previewProg"
+                                   accept=".hex,.bat"
+                                   multiple />
+                            <div id="previewProg" class="d-flex gap-2 mt-2 flex-wrap"></div>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Revizyon No*</label>
+                            <input type="text" class="form-control" name="revizyonNo" required />
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Açıklama*</label>
+                            <input type="text" class="form-control" name="aciklama" required />
                         </div>
                     </div>
-
-                    <!-- Önceden Yüklenmiş Revizyonlar Listesi -->
-                    <div class="card">
-                        <div class="card-header">Yüklenmiş Revizyonlar</div>
-                        <div class="card-body">
-                            <table class="table table-bordered table-striped">
-                                <thead>
-                                    <tr>
-                                        <th>Revizyon No</th>
-                                        <th>Revizyon Notları</th>
-                                        <th>Dosya</th>
-                                        <th>Durum</th>
-                                        <th>Yükleyen Kullanıcı</th>
-                                        <th>Yükleme Tarihi </th>
-                                    </tr>
-                                </thead>
-                                <tbody id="revizyonlarTable">
-                                    <!-- Dinamik olarak doldurulacak -->
-                                    <!-- Örnek Satır -->
-                                  
-                                    <tr>
-                                        <td>1.0</td>
-                                        <td>İlk sürüm</td>
-                                        <td><a href="#">dosya.hex</a></td>
-                                        <td><span class="badge bg-warning">Onay Bekliyor</span></td>
-                                        <td>İlk sürüm</td>
-                                        <td>İlk sürüm</td>
-                                    </tr>
-                                
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-
                 </div>
+
                 <div class="modal-footer">
-                    <button class="btn btn-secondary" data-bs-dismiss="modal">Kapat</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">İptal</button>
+                    <button type="submit" class="btn btn-primary">Kaydet</button>
                 </div>
-            </div>
+            </form>
         </div>
     </div>
-
-
-
-    <!-- Popup Modal -->
-    <div class="modal fade" id="actionModal" tabindex="-1">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
+</div>
+<!-- yazılım ekle bitişi -->
+<!-- Yazılım Düzenle Modal -->
+<div class="modal fade" id="editModal" tabindex="-1">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content">
+            <form id="editForm">
                 <div class="modal-header">
-                    <h5 class="modal-title">Bilgi</h5>
+                    <h5 class="modal-title">🛠 Yazılımı Düzenle</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body">
-                    <p id="actionMessage"></p>
+                    <div class="row g-3 mb-3">
+                        <div class="col-md-6">
+                            <label class="form-label">Yazılım Kodu</label>
+                            <input type="text" class="form-control" name="yazilimKodu" id="editYazilimKodu" readonly />
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Yazılım Tanımlaması</label>
+                            <input type="text" class="form-control" name="yazilimTanimlamasi" id="editYazilimTanimlamasi" required />
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Programlama Tipi</label>
+                            <input type="text" class="form-control" name="programlamaTipi" id="editProgramlamaTipi" required />
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Revizyon No</label>
+                            <input type="text" class="form-control" name="revizyonNo" id="editRevizyonNo" required />
+                        </div>
+                        <div class="col-md-12">
+                            <label class="form-label">Açıklama</label>
+                            <input type="text" class="form-control" name="aciklama" id="editAciklama" required />
+                        </div>
+                    </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Tamam</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">İptal</button>
+                    <button type="submit" class="btn btn-primary">Kaydet</button>
                 </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!-- Yazılım Düzenle Modal bitişi -->
+<!-- Revizyonlar Modal -->
+<div class="modal fade" id="revizyonModal" tabindex="-1">
+    <div class="modal-dialog modal-xl modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Yazılım Revizyonları</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+
+                <!-- Seçilen Yazılım Bilgileri -->
+                <div class="mb-3">
+                    <p><strong>Yazılım ID:</strong> <span id="revizyonYazilimId"></span></p>
+                    <p><strong>Yazılım Adı:</strong> <span id="revizyonYazilimAdi"></span></p>
+                </div>
+
+                <!-- Yeni Revizyon Yükleme -->
+                <div class="card mb-4">
+                    <div class="card-header">Yeni Revizyon Yükle</div>
+                    <div class="card-body">
+                        <form id="revizyonForm">
+                            <div class="row g-3">
+                                <div class="col-md-4">
+                                    <label class="form-label">Revizyon No*</label>
+                                    <input type="text" class="form-control" name="revizyonNo" required>
+                                </div>
+                                <div class="col-md-8">
+                                    <label class="form-label">Revizyon Notları (Opsiyonel)</label>
+                                    <input type="text" class="form-control" name="revizyonNotu" placeholder="Örn: Hata düzeltmeleri, yeni özellikler">
+                                </div>
+                                <div class="col-md-12">
+                                    <label class="form-label">Revizyon Dosyası*</label>
+                                    <input type="file"
+                                           class="form-control"
+                                           name="revizyonDosya"
+                                           accept=".hex,.bat"
+                                           required>
+                                </div>
+                            </div>
+                            <div class="mt-3 text-end">
+                                <button type="submit" class="btn btn-primary">Yükle</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- Önceden Yüklenmiş Revizyonlar Listesi -->
+                <div class="card">
+                    <div class="card-header">Yüklenmiş Revizyonlar</div>
+                    <div class="card-body">
+                        <table class="table table-bordered table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Revizyon No</th>
+                                    <th>Revizyon Notları</th>
+                                    <th>Dosya</th>
+                                    <th>Durum</th>
+                                    <th>Yükleyen Kullanıcı</th>
+                                    <th>Yükleme Tarihi </th>
+                                </tr>
+                            </thead>
+                        </table>
+                    </div>
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" data-bs-dismiss="modal">Kapat</button>
             </div>
         </div>
     </div>
-    <!-- Popup Modal bitişi-->
 </div>
 
 
 
+<!-- Modal'lar aynı kalıyor (Create, Edit, Revizyon) -->
+<!-- Popup Modal -->
+<div class="modal fade" id="actionModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Bilgi</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <p id="actionMessage"></p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Tamam</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Popup Modal bitişi-->
+</div>
 
 <!-- Core JS -->
 <!-- build:js assets/vendor/js/core.js -->
@@ -378,187 +314,132 @@
 <script async defer src="https://buttons.github.io/buttons.js"></script>
 
 
+
+<!-- JS -->
+<script src="~/sneat-1.0.0/assets/vendor/libs/jquery/jquery.js"></script>
+<script src="~/sneat-1.0.0/assets/vendor/js/bootstrap.js"></script>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+
+<!-- DataTables -->
+<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/2.4.2/js/dataTables.buttons.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/2.4.2/js/buttons.bootstrap5.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/2.4.2/js/buttons.html5.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/2.4.2/js/buttons.print.min.js"></script>
+<script src="https://cdn.datatables.net/responsive/2.5.0/js/dataTables.responsive.min.js"></script>
+<link href="https://cdn.datatables.net/responsive/2.5.0/css/responsive.bootstrap5.min.css" rel="stylesheet">
+<link href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css" rel="stylesheet">
+
 <script>
-    $(document).ready(function () {
-      // DataTable başlat
-      let table = $("#example").DataTable({
-        dom: "Brtip",
-
-
-        buttons: [
-          { extend: "copy", className: "dropdown-item" },
-          { extend: "csv", className: "dropdown-item" },
-          { extend: "excel", className: "dropdown-item" },
-          { extend: "pdf", className: "dropdown-item" },
-          { extend: "print", className: "dropdown-item" },
-        ],
-        language: {
-      decimal: ",",
-      thousands: ".",
-      search: "Ara:",
-      lengthMenu: "Sayfada _MENU_ kayıt göster",
-      info: "_TOTAL_ kayıttan _START_ - _END_ arası gösteriliyor",
-      infoEmpty: "Gösterilecek kayıt yok",
-      infoFiltered: "(_MAX_ kayıt içerisinden filtrelendi)",
-      loadingRecords: "Yükleniyor...",
-      zeroRecords: "Eşleşen kayıt bulunamadı",
-      emptyTable: "Tabloda veri yok",
-      paginate: {
-        first: "İlk",
-        previous: "Önceki",
-        next: "Sonraki",
-        last: "Son"
-      },
-      buttons: {
-        copy: "Kopyala",
-        csv: "CSV",
-        excel: "Excel",
-        pdf: "PDF",
-        print: "Yazdır"
-      }
-    }
-      });
-
-      // Export dropdown’u DataTables butonlarıyla doldur
-      table.buttons().container().appendTo(".dt-buttons .dropdown-menu");
-
-      // Length dropdown senkronize et
-      $("#dt-length").on("change", function () {
-        table.page.len($(this).val()).draw();
-      });
-
-      // Search input senkronize et
-      $("#dt-search").on("keyup", function () {
-        table.search(this.value).draw();
-      });
-
-      // Popup fonksiyonu
-      function showPopup(message) {
-        $("#actionMessage").text(message);
-        let modal = new bootstrap.Modal(document.getElementById("actionModal"));
-        modal.show();
-      }
-
-      // // Düzenle butonu
-      // $("#example").on("click", ".btn-edit", function () {
-      //   let row = $(this).closest("tr");
-      //   let btn = $(this);
-
-      //   if (btn.text() === "Düzenle") {
-      //     row.find("td").not(":last").attr("contenteditable", "true").addClass("table-warning");
-      //     btn.text("Kaydet");
-      //   } else {
-      //     row.find("td").not(":last").removeAttr("contenteditable").removeClass("table-warning");
-      //     btn.text("Düzenle");
-      //     showPopup("Satır başarıyla güncellendi ✅");
-      //   }
-      // });
-
-
-       // Düzenle butonu
-    $("#example").on("click", ".btn-edit", function () {
-      let row = $(this).closest("tr").find("td");
-
-      // Satırdaki değerleri çek
-      let yazilimKodu = row.eq(1).text();
-      let yazilimAdi = row.eq(2).text();
-      let revizyonNo = row.eq(3).text();
-      let programlamaTipi = row.eq(4).text();
-      let aciklama = row.eq(5).text();
-
-      // Modal içini doldur
-      $("#editYazilimKodu").val(yazilimKodu);
-      $("#editYazilimTanimlamasi").val(yazilimAdi);
-      $("#editProgramlamaTipi").val(programlamaTipi);
-      $("#editRevizyonNo").val(revizyonNo);
-      $("#editAciklama").val(aciklama);
-
-      // Modalı aç
-      new bootstrap.Modal(document.getElementById("editModal")).show();
-    });
-
-    // Düzenleme kaydetme
-    $("#editForm").on("submit", function (e) {
-      e.preventDefault();
-
-      let data = {
-        yazilimKodu: $("#editYazilimKodu").val(),
-        yazilimTanimlamasi: $("#editYazilimTanimlamasi").val(),
-        programlamaTipi: $("#editProgramlamaTipi").val(),
-        revizyonNo: $("#editRevizyonNo").val(),
-        aciklama: $("#editAciklama").val()
-      };
-
-      // 🔗 Burada backend’e AJAX ile gönderilebilir
-      // $.post("/Yazilim/Duzenle", data, function (res) { ... });
-
-      $("#editModal").modal("hide");
-      showPopup("Yazılım başarıyla güncellendi ✅");
+       $("#example").DataTable({
+        ajax: {
+            url: 'https://localhost:7170/api/software',  // API URL'sini tam yaz
+            type: 'GET',
+            dataSrc: ""
+        },
+        columns: [
+            { data: "id" },
+            { data: "softwareCode" },   // dikkat, API response’daki property isimleriyle aynı olmalı
+            { data: "name" },
+            { data: "revisionNo" },
+            { data: "programmingType" },
+            { data: "description" },
+            {
+                data: null,
+                render: function (data, type, row) {
+                    return `
+                        <div class="d-flex flex-wrap gap-2">
+                            <button class="btn btn-sm btn-secondary btn-edit">Düzenle</button>
+                            <button class="btn btn-sm btn-secondary btn-delete">Sil</button>
+                            <button class="btn btn-sm btn-info btn-revizyon">Revizyon</button>
+                        </div>`;
+                }
+            }
+        ]
     });
 
 
-     
-       // Sil butonu
-    $("#example").on("click", ".btn-delete", function () {
-      let row = $(this).closest("tr");
 
-      Swal.fire({
-        title: "Emin misin?",
-        text: "Bu satırı silmek istediğine emin misin?",
-        icon: "warning",
-        showCancelButton: true,
-        confirmButtonText: "Evet, sil",
-        cancelButtonText: "İptal",
-        confirmButtonColor: "#3085d6",
-        cancelButtonColor: "#d33"
-      }).then((result) => {
-        if (result.isConfirmed) {
-          table.row(row).remove().draw();
-          showPopup("Satır başarıyla silindi 🗑️");
-        }
-      });
-    });
+        $("#dt-length").on("change", function () { table.page.len($(this).val()).draw(); });
+        $("#dt-search").on("keyup", function () { table.search(this.value).draw(); });
 
-
-      // Yeni kayıt modalını aç
-      $(".create-new").on("click", function () {
-        $("#createForm")[0].reset();
-        $("#createForm .d-flex").empty(); // önceki previewleri temizle
-        let modal = new bootstrap.Modal(document.getElementById("createModal"));
-        modal.show();
-      });
-
-      // Detaylar butonu
-      $("#example").on("click", ".btn-revizyon", function () {
-        let row = table.row($(this).closest("tr"));
-        let rowIndex = row.index();
-        let data = row.data();
-
-            document.querySelectorAll(".btn-revizyon").forEach(btn => {
-        btn.addEventListener("click", function () {
-            let row = this.closest("tr");
-            let yazilimId = row.cells[0].innerText;
-            let yazilimAdi = row.cells[2].innerText;
-
-            document.getElementById("revizyonYazilimId").innerText = yazilimId;
-            document.getElementById("revizyonYazilimAdi").innerText = yazilimAdi;
-
-            // Burada AJAX ile revizyon listesini backend'den çekebilirsiniz
-            // ve #revizyonlarTable içine ekleyebilirsiniz
-
-            new bootstrap.Modal(document.getElementById("revizyonModal")).show();
-
+        // 🔹 Silme (AJAX)
+        $("#example").on("click", ".btn-delete", function () {
+            let row = table.row($(this).closest("tr"));
+            let data = row.data();
+            Swal.fire({
+                title: "Silinsin mi?", text: `${data.yazilimAdi} silinecek`,
+                icon: "warning", showCancelButton: true,
+                confirmButtonText: "Evet, Sil", cancelButtonText: "İptal"
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        url: `/Yazilim/Delete/${data.id}`,
+                        type: "POST",
+                        success: function () {
+                            row.remove().draw();
+                            Swal.fire("Silindi", "Kayıt silindi", "success");
+                        }
+                    });
+                }
+            });
         });
 
-    });
+        // 🔹 Düzenleme (form açma)
+        $("#example").on("click", ".btn-edit", function () {
+            let data = table.row($(this).closest("tr")).data();
+            $("#editYazilimKodu").val(data.yazilimKodu);
+            $("#editYazilimTanimlamasi").val(data.yazilimAdi);
+            $("#editRevizyonNo").val(data.revizyonNo);
+            $("#editProgramlamaTipi").val(data.dosyaTuru);
+            $("#editAciklama").val(data.aciklama);
+            $("#editForm").data("id", data.id);
+            new bootstrap.Modal(document.getElementById("editModal")).show();
+        });
 
+        // 🔹 Düzenleme Kaydet (AJAX)
+        $("#editForm").on("submit", function (e) {
+            e.preventDefault();
+            let id = $(this).data("id");
+            let payload = {
+                id: id,
+                yazilimKodu: $("#editYazilimKodu").val(),
+                yazilimAdi: $("#editYazilimTanimlamasi").val(),
+                revizyonNo: $("#editRevizyonNo").val(),
+                dosyaTuru: $("#editProgramlamaTipi").val(),
+                aciklama: $("#editAciklama").val()
+            };
+            $.ajax({
+                url: "/Yazilim/Update",
+                type: "POST",
+                data: payload,
+                success: function () {
+                    $("#editModal").modal("hide");
+                    table.ajax.reload(null, false);
+                    Swal.fire("Güncellendi", "Kayıt güncellendi", "success");
+                }
+            });
+        });
 
-        
-      });
+        // 🔹 Yeni kayıt
+        $(".create-new").on("click", function () {
+            $("#createForm")[0].reset();
+            new bootstrap.Modal(document.getElementById("createModal")).show();
+        });
+        $("#createForm").on("submit", function (e) {
+            e.preventDefault();
+            let payload = $(this).serialize();
+            $.ajax({
+                url: "/Yazilim/Create",
+                type: "POST",
+                data: payload,
+                success: function () {
+                    $("#createModal").modal("hide");
+                    table.ajax.reload(null, false);
+                    Swal.fire("Eklendi", "Yeni yazılım eklendi", "success");
+                }
+            });
+        });
     });
 </script>
-
-
-
-
-
