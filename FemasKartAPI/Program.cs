@@ -2,6 +2,7 @@ using Business;
 using Business.Cards;
 using Business.Photoes;
 using Business.Services;
+using Business.Softwares;
 using Business.Users;
 using DataAccess;
 using DataAccess.Repositories;
@@ -21,7 +22,7 @@ builder.Services.AddOpenApi();
 //builder.Services.AddAutoMapper(typeof(UserProfile));
 
 builder.Services.AddDbContext<AppDbContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 builder.Services.Configure<PhotoSettings>(builder.Configuration.GetSection("PhotoSettings"));
 
@@ -29,6 +30,7 @@ builder.Services.AddScoped<IPhotoService, PhotoService>();
 builder.Services.AddScoped<ICardService, CardService>();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IDepartmentService, DepartmentService>();
+builder.Services.AddScoped<ISoftwareService, SoftwareService>();
 
 
 builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
