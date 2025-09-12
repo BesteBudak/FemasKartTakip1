@@ -84,6 +84,9 @@ namespace FemasKart.Controllers
 //    }
 public class SoftwareController : BaseController
 {
+        //private readonly HttpClient _httpClient; public SoftwareController(IHttpClientFactory httpClientFactory)
+        //{
+        //    _httpClient = httpClientFactory.CreateClient(); _httpClient.BaseAddress = new Uri("https://localhost:44343/");}
     public IActionResult Index()
     {
         var redirect = RequireLogin();

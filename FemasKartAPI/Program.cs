@@ -2,6 +2,7 @@ using Business;
 using Business.Cards;
 using Business.Photoes;
 using Business.Services;
+using Business.Softwares;
 using Business.Users;
 using DataAccess;
 using DataAccess.Repositories;
@@ -29,6 +30,7 @@ builder.Services.AddScoped<IPhotoService, PhotoService>();
 builder.Services.AddScoped<ICardService, CardService>();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IDepartmentService, DepartmentService>();
+builder.Services.AddScoped<ISoftwareService, SoftwareService>();
 
 
 builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
